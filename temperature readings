@@ -1,0 +1,46 @@
+import matplotlib.pyplot as plt
+
+def plot_temperature_readings(temperatures):
+    """
+    Plots a line graph representing temperature readings over a week.
+
+    Args:
+        temperatures (list): A list of temperature readings for each day of the week.
+    """
+    days_of_week = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+
+    # Check if the number of temperatures matches the number of days
+    if len(temperatures) != len(days_of_week):
+        print("Error: The number of temperature readings does not match the number of days in a week.")
+        return
+
+    # Create the plot
+    plt.figure(figsize=(10, 6)) # Set the figure size for better readability
+    plt.plot(days_of_week, temperatures, marker='o', linestyle='-', color='skyblue', linewidth=2, markersize=8)
+
+    # Add labels and title
+    plt.xlabel("Day of the Week", fontsize=12)
+    plt.ylabel("Temperature (°C)", fontsize=12)
+    plt.title("Weekly Temperature Readings", fontsize=14, fontweight='bold')
+
+    # Add grid for better readability
+    plt.grid(True, linestyle='--', alpha=0.7)
+
+    # Customize y-axis limits to better fit the data range
+    min_temp = min(temperatures) - 2
+    max_temp = max(temperatures) + 2
+    plt.ylim(min_temp, max_temp)
+
+    # Annotate each point with its temperature value
+    for i, temp in enumerate(temperatures):
+        plt.text(days_of_week[i], temp + 0.5, f"{temp}°C", ha='center', va='bottom', fontsize=10)
+
+    # Display the plot
+    plt.tight_layout() # Adjust layout to prevent labels from overlapping
+    plt.show()
+
+# Temperature readings for the week
+weekly_temperatures = [20, 22, 19, 23, 21, 24, 20]
+
+# Call the function to plot the graph
+plot_temperature_readings(weekly_temperatures)
