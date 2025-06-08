@@ -1,0 +1,44 @@
+import numpy as np
+from scipy.integrate import dblquad
+
+def integrand(y, x):
+    """
+    The function representing the surface z = x^2 + y^2.
+    Note: dblquad expects the integrand function signature as f(y, x).
+    """
+    return x**2 + y**2
+
+def calculate_volume_under_surface(x_lower, x_upper, y_lower, y_upper):
+    """
+    Calculates the volume under the surface z = x^2 + y^2 over a square region
+    using numerical double integration.
+
+    Args:
+        x_lower (float): The lower bound for x.
+        x_upper (float): The upper bound for x.
+        y_lower (float): The lower bound for y.
+        y_upper (float): The upper bound for y.
+
+    Returns:
+        tuple: A tuple containing the calculated volume and the absolute error estimate.
+    """
+    # dblquad(func, a, b, gfun, hfun)
+    # func: The function to integrate, with signature f(y, x)
+    # a, b: The lower and upper limits of x
+    # gfun, hfun: The lower and upper limits of y, which can be functions of x
+    volume, abserr = dblquad(integrand, x_lower, x_upper, lambda x: y_lower, lambda x: y_upper)
+    return volume, abserr
+
+# Define the square region
+x_min = 0
+x_max = 1
+y_min = 0
+y_max = 1
+
+# Calculate the volume
+calculated_volume, error_estimate = calculate_volume_under_surface(x_min, x_max, y_min, y_max)
+
+# Print the result
+print(f"The volume under the surface z = x^2 + y^2 over the square region {x_min} ≤ x, y ≤ {x_max} is:")
+print(f"Volume: {calculated_volume:.6f}")
+print(f"Estimated absolute error: {error_estimate:.6e}")
